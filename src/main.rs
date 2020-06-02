@@ -122,7 +122,6 @@ impl Game {
 
 impl fmt::Display for Game {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
-        print!("{}[2J", 27 as char);
         write!(f, "\x1B[30m\x1B[42m{}\x1B[0m", "   a b c d e f g h \n");
         for i in 0..self.board.len() {
             write!(f, "\x1B[30m\x1B[42m{} {} \x1B[0m", "", i + 1);
@@ -148,8 +147,9 @@ fn put_on_board(game: &mut Game, peice: Peice) {
         .expect("failed to read from stdin");
     let input = input.as_bytes();
     let mut result = game.put_peice(peice, input[0] as char, input[1] as i8 - 48);
+    println!("{}[2J", 27 as char);
     if result.is_err() {
-        eprintln!("{}", result.err().unwrap());
+        eprintln!("\x1B[37m\x1B[41m{}\x1B[0m", result.err().unwrap());
     }
 }
 
