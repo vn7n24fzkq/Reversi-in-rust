@@ -1,5 +1,5 @@
 [package]
-name = "Reversi-in-rust"
+name = "reversi-in-rust"
 version = "0.1.0"
 authors = ["vn7n24fzkq <vn7n24fzkq@gmail.com>"]
 edition = "2018"
