@@ -18,6 +18,16 @@ impl Peice {
     }
 }
 
+impl Clone for Peice {
+    fn clone(&self) -> Peice {
+        match self {
+            Peice::BLACK => Peice::BLACK,
+            Peice::WHITE => Peice::WHITE,
+            Peice::EMPTY => Peice::EMPTY,
+        }
+    }
+}
+
 #[derive(PartialEq)]
 pub enum GameState {
     FINISHED,
@@ -26,8 +36,8 @@ pub enum GameState {
 }
 
 pub struct Game {
-    board: [[i8; 8]; 8],
-    turn_count: i8,
+    pub board: [[i8; 8]; 8],
+    pub turn_count: i8,
     pub state: GameState,
 }
 
@@ -45,6 +55,28 @@ impl Game {
         game
     }
 
+    pub fn comput_winner(&self) -> Peice {
+        let mut black = 0;
+        let mut white = 0;
+        for i in self.board.iter() {
+            for j in i.iter() {
+                let peice = Peice::from_i8(*j);
+                match peice {
+                    Peice::BLACK => black += 1,
+                    Peice::WHITE => white += 1,
+                    _ => (),
+                };
+            }
+        }
+        if black > white {
+            return Peice::BLACK;
+        } else if white > black {
+            return Peice::WHITE;
+        } else {
+            return Peice::EMPTY;
+        }
+    }
+
     pub fn row_to_index(&self, row: &char) -> i8 {
         *row as i8 - 97
     }
@@ -60,15 +92,24 @@ impl Game {
         self.turn_count += 1;
     }
 
-    pub fn put_peice(
+    pub fn put_peice_with_humanread(
         &mut self,
         peice: Peice,
         row_index: char,
         col_index: i8,
     ) -> std::result::Result<(), &str> {
-        // board index start ad 1
         let col_index_on_board = (col_index - 1) as usize;
         let row_index_on_board = self.row_to_index(&row_index) as usize;
+        self.put_peice(peice, row_index_on_board, col_index_on_board)
+    }
+
+    pub fn put_peice(
+        &mut self,
+        peice: Peice,
+        row_index_on_board: usize,
+        col_index_on_board: usize,
+    ) -> std::result::Result<(), &str> {
+        // board index start ad 1
         if col_index_on_board >= 8 || row_index_on_board >= 8 {
             return Err("Wrong cocoordinate!!");
         }
@@ -80,7 +121,7 @@ impl Game {
             {
                 return Err("It is not your turn now!!");
             }
-            let effect = Game::the_point_if_you_can_place_and_effect(self.board, peice);
+            let effect = Game::the_point_if_you_can_place_and_effect(self.board, peice.clone());
             let mut find: (usize, usize, [[i8; 8]; 8]) = (0, 0, [[0; 8]; 8]);
             let mut findout = false;
 
@@ -116,6 +157,22 @@ impl Game {
                     self.state = GameState::FINISHED;
                 }
             }
+            let mut p = peice.clone();
+            match peice {
+                Peice::WHITE => p = Peice::BLACK,
+                Peice::BLACK => p = Peice::WHITE,
+                Peice::EMPTY => (),
+            }
+
+            let effect = Game::the_point_if_you_can_place_and_effect(find.2, p);
+
+            if effect.len() == 0 {
+                if self.state == GameState::BlackTurn {
+                    self.state = GameState::WhiteTurn;
+                } else if self.state == GameState::WhiteTurn {
+                    self.state = GameState::BlackTurn;
+                }
+            }
             return Ok(());
         }
     }
@@ -130,6 +187,9 @@ impl Game {
         for i in 0..board.len() {
             for j in 0..board[i].len() {
                 let mut result_board = board;
+                if (board[i][j] != 0) {
+                    continue;
+                }
                 let effect_points = Game::_find_board(&board, i, j, &peice_number);
                 if effect_points.len() == 0 {
                     continue;

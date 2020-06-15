@@ -1,4 +1,6 @@
+mod com_player;
 mod game;
+use com_player::*;
 use game::*;
 
 fn put_on_board(game: &mut Game, peice: game::Peice) {
@@ -12,7 +14,7 @@ fn put_on_board(game: &mut Game, peice: game::Peice) {
         eprintln!("\x1B[37m\x1B[41m{}\x1B[0m", "Wrong input!");
         return;
     }
-    let result = game.put_peice(peice, input[0] as char, input[1] as i8 - 48);
+    let result = game.put_peice_with_humanread(peice, input[0] as char, input[1] as i8 - 48);
     println!("{}[2J", 27 as char);
     if result.is_err() {
         eprintln!("\x1B[37m\x1B[41m{}\x1B[0m", result.err().unwrap());
@@ -23,18 +25,30 @@ fn main() {
     let mut game: Game = Game::new();
     let com_first = true;
     println!("{}", game);
+    let com = ComPlayer::new();
     while game.state != GameState::FINISHED {
         match game.state {
             GameState::WhiteTurn => {
                 println!("\x1B[34m\x1B[47m{}\x1B[0m", "white's trun");
-                put_on_board(&mut game, Peice::WHITE);
+                // put_on_board(&mut game, Peice::WHITE);
+                let da_way = com.find_the_best_way(&mut game, Peice::WHITE);
+                game.put_peice(Peice::WHITE, da_way.1, da_way.0);
             }
             GameState::BlackTurn => {
                 println!("\x1B[34m\x1B[40m{}\x1B[0m", "black's trun");
-                put_on_board(&mut game, Peice::BLACK);
+                let da_way = com.find_the_best_way(&mut game, Peice::BLACK);
+                game.put_peice(Peice::BLACK, da_way.1, da_way.0);
+                // put_on_board(&mut game, Peice::BLACK);
             }
             GameState::FINISHED => println!("FINISHED!!!"),
         }
-        println!("{}", game);
+        // println!("{}", game);
     }
+    let winner = game.comput_winner();
+    match winner {
+        Peice::BLACK => println!("Black WIN!!"),
+        Peice::WHITE => println!("WHITE WIN!!"),
+        Peice::EMPTY => println!("DRAW!"),
+    }
+    println!("{}", game);
 }
