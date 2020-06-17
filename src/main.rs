@@ -36,15 +36,15 @@ fn main() {
             }
             GameState::BlackTurn => {
                 println!("\x1B[34m\x1B[40m{}\x1B[0m", "black's trun");
-                let da_way = com.find_the_best_way(&mut game, Peice::BLACK);
-                game.put_peice(Peice::BLACK, da_way.1, da_way.0);
-                // put_on_board(&mut game, Peice::BLACK);
+                // let da_way = com.find_the_best_way(&mut game, Peice::BLACK);
+                // game.put_peice(Peice::BLACK, da_way.1, da_way.0);
+                put_on_board(&mut game, Peice::BLACK);
             }
             GameState::FINISHED => println!("FINISHED!!!"),
         }
-        // println!("{}", game);
+        println!("{}", game);
     }
-    let winner = game.comput_winner();
+    let winner = game.compute_winner();
     match winner {
         Peice::BLACK => println!("Black WIN!!"),
         Peice::WHITE => println!("WHITE WIN!!"),

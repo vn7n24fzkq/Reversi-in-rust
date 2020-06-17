@@ -28,13 +28,14 @@ impl Clone for Peice {
     }
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone)]
 pub enum GameState {
     FINISHED,
     WhiteTurn,
     BlackTurn,
 }
 
+#[derive(Clone)]
 pub struct Game {
     pub board: [[i8; 8]; 8],
     pub turn_count: i8,
@@ -55,7 +56,7 @@ impl Game {
         game
     }
 
-    pub fn comput_winner(&self) -> Peice {
+    pub fn compute_winner(&self) -> Peice {
         let mut black = 0;
         let mut white = 0;
         for i in self.board.iter() {

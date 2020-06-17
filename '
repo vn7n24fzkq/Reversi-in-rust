@@ -1,0 +1,28 @@
+use crate::game::*;
+
+pub struct ComPlayer {}
+
+impl ComPlayer {
+    pub fn new() -> ComPlayer {
+        ComPlayer {}
+    }
+    pub fn find_the_best_way(&self, game: &mut Game, peice: Peice) -> (usize, usize, [[i8; 8]; 8]) {
+        let da_way = Game::the_point_if_you_can_place_and_effect(game.board, peice);
+
+        da_way[0]
+    }
+
+    fn find_da_way(game: &mut Game) {
+        let temp_game = game.clone();
+        match game.state {
+            GameState::FINISHED => {
+                game.comput_winner();
+            },
+            GameState::BlackTurn => {
+
+            }
+
+            GameState::WhiteTurn => {}
+        }
+    }
+}
