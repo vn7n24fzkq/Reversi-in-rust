@@ -1,5 +1,6 @@
 use crate::game::*;
 use std::cmp;
+use std::time::{Duration, Instant};
 
 pub struct ComPlayer;
 
@@ -55,6 +56,7 @@ impl ComPlayer {
         peice: Peice,
         max_level: i32,
     ) -> (usize, usize, [[i8; 8]; 8]) {
+        let now = Instant::now();
         let da_way = Game::the_point_if_you_can_place_and_effect(game.board, peice.clone());
         //black >0 white <0
         let mut way = da_way[0];
@@ -75,6 +77,8 @@ impl ComPlayer {
                 state,
                 max_level,
                 true,
+                now,
+                20.0,
             );
             println!("{},{} - {}", w.1, w.0, c);
             if c < cost {
@@ -83,6 +87,7 @@ impl ComPlayer {
             }
         }
         println!("{}", cost);
+        println!("spend {:?}", Instant::now().checked_duration_since(now));
         return way;
     }
 
@@ -96,6 +101,8 @@ impl ComPlayer {
         target_peice: i8,
         max_level: i32,
         max: bool,
+        time_instant: Instant,
+        limit_sec: f64,
     ) -> i64 {
         let mut game = g.clone();
         game.put_peice(Peice::from_i8(peice), x, y);
@@ -103,6 +110,18 @@ impl ComPlayer {
         let mut state = 1;
         if (game.state == GameState::WhiteTurn) {
             state = -1;
+        }
+        if Instant::now()
+            .checked_duration_since(time_instant)
+            .unwrap()
+            .as_secs_f64()
+            > limit_sec
+        {
+            println!("Spend too much time!!");
+            match game.compute_winner().to_i8() {
+                target_peice => return i64::MAX - 1,
+                _ => return i64::MIN + 1,
+            }
         }
         if game.state == GameState::FINISHED || game.turn_count >= 54 {
             match game.compute_winner().to_i8() {
@@ -129,6 +148,8 @@ impl ComPlayer {
                     target_peice,
                     max_level - 1,
                     target_peice == state,
+                    time_instant,
+                    limit_sec,
                 ),
             );
             alpha = cmp::max(cost, alpha);

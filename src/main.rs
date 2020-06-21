@@ -2,6 +2,7 @@ mod com_player;
 mod game;
 use com_player::*;
 use game::*;
+use std::time::{Duration, Instant};
 
 fn put_on_board(game: &mut Game, peice: game::Peice) {
     let mut input = String::new();
@@ -22,6 +23,7 @@ fn put_on_board(game: &mut Game, peice: game::Peice) {
 }
 
 fn main() {
+    let now = Instant::now();
     let mut game: Game = Game::new();
     let com_first = true;
     println!("{}", game);
@@ -36,9 +38,9 @@ fn main() {
             }
             GameState::BlackTurn => {
                 println!("\x1B[34m\x1B[40m{}\x1B[0m", "black's trun");
-                // let da_way = com.find_the_best_way(&mut game, Peice::BLACK, 6);
-                // game.put_peice(Peice::BLACK, da_way.1, da_way.0);
-                put_on_board(&mut game, Peice::BLACK);
+                let da_way = com.find_the_best_way(&mut game, Peice::BLACK, 6);
+                game.put_peice(Peice::BLACK, da_way.1, da_way.0);
+                // put_on_board(&mut game, Peice::BLACK);
             }
             GameState::FINISHED => println!("FINISHED!!!"),
         }
@@ -51,4 +53,8 @@ fn main() {
         Peice::EMPTY => println!("DRAW!"),
     }
     println!("{}", game);
+    println!(
+        "game spend {:?}",
+        Instant::now().checked_duration_since(now)
+    );
 }
