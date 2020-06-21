@@ -86,8 +86,13 @@ impl ComPlayer {
                 way = w;
             }
         }
-        println!("{}", cost);
-        println!("spend {:?}", Instant::now().checked_duration_since(now));
+        println!(
+            "The way [{}{}] cost:{} spend {:?}",
+            game.row_index_to_char(way.1 as u8 - 1),
+            way.0 + 1,
+            cost,
+            Instant::now().checked_duration_since(now)
+        );
         return way;
     }
 
