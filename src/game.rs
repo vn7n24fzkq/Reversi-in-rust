@@ -8,7 +8,14 @@ pub enum Peice {
 }
 
 impl Peice {
-    fn from_i8(value: i8) -> Peice {
+    pub fn to_i8(&self) -> i8 {
+        match self {
+            Peice::BLACK => 1,
+            Peice::WHITE => -1,
+            Peice::EMPTY => 0,
+        }
+    }
+    pub fn from_i8(value: i8) -> Peice {
         match value {
             1 => Peice::BLACK,
             -1 => Peice::WHITE,

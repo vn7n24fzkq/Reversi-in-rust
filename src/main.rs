@@ -30,15 +30,15 @@ fn main() {
         match game.state {
             GameState::WhiteTurn => {
                 println!("\x1B[34m\x1B[47m{}\x1B[0m", "white's trun");
-                put_on_board(&mut game, Peice::WHITE);
-                // let da_way = com.find_the_best_way(&mut game, Peice::WHITE, 6);
-                // game.put_peice(Peice::WHITE, da_way.1, da_way.0);
+                // put_on_board(&mut game, Peice::WHITE);
+                let da_way = com.find_the_best_way(&mut game, Peice::WHITE, 6);
+                game.put_peice(Peice::WHITE, da_way.1, da_way.0);
             }
             GameState::BlackTurn => {
                 println!("\x1B[34m\x1B[40m{}\x1B[0m", "black's trun");
-                let da_way = com.find_the_best_way(&mut game, Peice::BLACK, 3);
-                game.put_peice(Peice::BLACK, da_way.1, da_way.0);
-                // put_on_board(&mut game, Peice::BLACK);
+                // let da_way = com.find_the_best_way(&mut game, Peice::BLACK, 6);
+                // game.put_peice(Peice::BLACK, da_way.1, da_way.0);
+                put_on_board(&mut game, Peice::BLACK);
             }
             GameState::FINISHED => println!("FINISHED!!!"),
         }
