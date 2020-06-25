@@ -23,4 +23,9 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Run wasm
-      run: wasm-pack build  
+      run: wasm-pack build
+    - name: Move pkg to gh-page
+      run: mv ./pkg ./public/pkg 
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.6.1
+        
