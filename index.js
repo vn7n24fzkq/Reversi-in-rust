@@ -1,5 +1,3 @@
-import {Othello}  from './pkg/';
-
 var othello = Othello.new();
 
 function run(){
