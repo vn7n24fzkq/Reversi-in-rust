@@ -1,0 +1,15 @@
+{
+  "name": "othello-wasm-in-rust",
+  "collaborators": [
+    "vn7n24fzkq <vn7n24fzkq@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "othello_wasm_in_rust_bg.wasm",
+    "othello_wasm_in_rust.js",
+    "othello_wasm_in_rust.d.ts"
+  ],
+  "module": "othello_wasm_in_rust.js",
+  "types": "othello_wasm_in_rust.d.ts",
+  "sideEffects": false
+}
