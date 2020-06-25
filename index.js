@@ -1,4 +1,4 @@
-import {Othello}  from './pkg/without_a_bundler.js';
+import {Othello}  from './pkg/';
 
 var othello = Othello.new();
 
