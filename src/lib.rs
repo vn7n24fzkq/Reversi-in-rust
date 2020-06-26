@@ -44,11 +44,13 @@ impl Othello {
             context: context,
         }
     }
-    pub fn start(&mut self, white_is_com: bool, black_is_com: bool) {
+    pub fn start(&mut self, white_is_com: bool, black_is_com: bool, depth: i32) {
         match self.game.state {
             GameState::WhiteTurn => {
                 if white_is_com {
-                    let da_way = self.com.find_the_best_way(&mut self.game, Peice::WHITE, 3);
+                    let da_way = self
+                        .com
+                        .find_the_best_way(&mut self.game, Peice::WHITE, depth);
                     self.game.put_peice(Peice::WHITE, da_way.1, da_way.0);
                 } else {
                     // put_on_board(&mut game, Peice::WHITE);
@@ -56,7 +58,9 @@ impl Othello {
             }
             GameState::BlackTurn => {
                 if black_is_com {
-                    let da_way = self.com.find_the_best_way(&mut self.game, Peice::BLACK, 3);
+                    let da_way = self
+                        .com
+                        .find_the_best_way(&mut self.game, Peice::BLACK, depth);
                     self.game.put_peice(Peice::BLACK, da_way.1, da_way.0);
                 } else {
                     // put_on_board(&mut game, Peice::BLACK);
