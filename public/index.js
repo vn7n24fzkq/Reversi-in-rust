@@ -2,9 +2,8 @@ import init, {
     Othello
 } from './pkg/othello_wasm_in_rust.js';
 
-init();
+var othello;
 
-var othello = Othello.new();
 async function run() {
     othello.draw();
     if (!othello.finish()) {
@@ -24,4 +23,10 @@ async function run() {
         othello = Othello.new();
     }
 }
-setInterval(run, 200);
+
+async function start() {
+    await init();
+    othello = Othello.new();
+    setInterval(run, 200);
+}
+start();
