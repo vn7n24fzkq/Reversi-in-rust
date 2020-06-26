@@ -1,4 +1,6 @@
-import {Othello}  from "./pkg/othello_wasm_in_rust.js"; 
+import {Othello}  from "./pkg/othello_wasm_in_rust.js";
+
+
 var othello = Othello.new();
 
 function run(){
