@@ -222,9 +222,10 @@ export class Othello {
     /**
     * @param {boolean} white_is_com
     * @param {boolean} black_is_com
+    * @param {number} depth
     */
-    start(white_is_com, black_is_com) {
-        wasm.othello_start(this.ptr, white_is_com, black_is_com);
+    start(white_is_com, black_is_com, depth) {
+        wasm.othello_start(this.ptr, white_is_com, black_is_com, depth);
     }
     /**
     * @returns {number}

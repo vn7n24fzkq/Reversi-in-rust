@@ -15,8 +15,9 @@ export class Othello {
 /**
 * @param {boolean} white_is_com 
 * @param {boolean} black_is_com 
+* @param {number} depth 
 */
-  start(white_is_com: boolean, black_is_com: boolean): void;
+  start(white_is_com: boolean, black_is_com: boolean, depth: number): void;
 /**
 * @returns {number} 
 */
@@ -33,7 +34,7 @@ export interface InitOutput {
   readonly __wbg_othello_free: (a: number) => void;
   readonly othello_finish: (a: number) => number;
   readonly othello_new: () => number;
-  readonly othello_start: (a: number, b: number, c: number) => void;
+  readonly othello_start: (a: number, b: number, c: number, d: number) => void;
   readonly othello_get_winner: (a: number) => number;
   readonly othello_draw: (a: number) => void;
   readonly __wbindgen_malloc: (a: number) => number;
