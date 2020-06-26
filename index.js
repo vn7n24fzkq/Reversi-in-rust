@@ -1,3 +1,4 @@
+import {Othello}  from "./pkg/othello_wasm_in_rust"; 
 var othello = Othello.new();
 
 function run(){
