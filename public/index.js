@@ -1,4 +1,4 @@
-import {Othello}  from "othello";
+import {Othello}  from "./pkg/othello_wasm_in_rust.js";
 
 
 var othello = Othello.new();
