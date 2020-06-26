@@ -2,7 +2,7 @@ import init, {
     Othello
 } from './pkg/othello_wasm_in_rust.js';
 
-init();
+init('./pkg/othello_wasm_in_rust.wasm');
 
 var othello = Othello.new();
 async function run() {
