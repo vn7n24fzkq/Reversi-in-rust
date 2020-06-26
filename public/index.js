@@ -7,7 +7,7 @@ var othello;
 async function run() {
     othello.draw();
     if (!othello.finish()) {
-        othello.start(true, true, 5);
+        othello.start(true, true, 3);
     } else {
         switch (othello.get_winner()) {
             case 1:
