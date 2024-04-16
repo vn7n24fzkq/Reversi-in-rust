@@ -11,5 +11,7 @@
   ],
   "module": "othello_wasm_in_rust.js",
   "types": "othello_wasm_in_rust.d.ts",
-  "sideEffects": false
+  "sideEffects": [
+    "./snippets/*"
+  ]
 }

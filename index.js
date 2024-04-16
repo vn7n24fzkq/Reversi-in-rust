@@ -11,10 +11,10 @@ async function run() {
     } else {
         switch (othello.get_winner()) {
             case 1:
-                alert("White WIN!!");
+                alert("Black WIN!!");
                 break;
             case -1:
-                alert("Black WIN!!");
+                alert("White WIN!!");
                 break;
             default:
                 alert("DRAW!!");
