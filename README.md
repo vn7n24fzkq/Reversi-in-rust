@@ -1,6 +1,6 @@
 # Reversi-in-rust
 
-This my AI class homework
+This is my AI class homework
 
 #### Demo two AI play othello with each other in wasm
 
